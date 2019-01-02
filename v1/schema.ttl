@@ -1,0 +1,78 @@
+# baseURI: http://schema.saltbaymedia.com/ontology/v1/
+# imports: http://schema.org/
+# prefix: sbm
+
+@prefix : <http://schema.saltbaymedia.com/ontology/v1/> .
+@prefix schema: <http://schema.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+#### Ontology
+
+<http://schema.saltbaymedia.com/ontology/v1/> a owl:Ontology ;
+    rdfs:label "Salt Bay Media Ontology"@en-US ;
+    rdfs:comment "An ontology for describing movies and the connections between them"@en-US ;
+    dc:creator "Adam Shepherd" ; 
+    dct:publisher <http://www.saltbaymedia.com/author/adam-shepherd> ;
+    dc:publisher "Salt Bay Media" ;
+    dct:publisher <http://www.saltbaymedia.com> ;
+    dct:issued "2019-01-01"^^xsd:date ;
+    dct:source "https://github.com/SaltBayMedia/Ontology"^^xsd:anyURI ;
+    owl:imports <http://schema.org/> ;
+    owl:versionInfo "0.1.0" .
+
+
+#### Annotation Properties 
+
+dc:creator a owl:AnnotationProperty .
+dct:creator a owl:AnnotationProperty .
+dc:publisher a owl:AnnotationProperty .
+dct:publisher a owl:AnnotationProperty .
+dct:issued a owl:AnnotationProperty .
+dct:source a owl:AnnotationProperty .
+
+
+#### Classes
+sbm:CreativeWorkRelationship a owl:Class ;
+    rdfs:label "CreativeWorkRelationship"@en-us ;
+    rdfs:comment """Qualifies how one CreativeWork is related to another CreativeWork. 
+        Since this is the value-add, classify it as a schema:Product.
+        In this way, we can use schema:additionalProperty to describe the value-add."""@en-us ;
+    rdfs:subClassOf schema:Product, schema:CreativeWork ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onProperty schema:category ] .
+
+
+#### Object Properties
+
+sbm:remakeOf a owl:ObjectProperty ;
+    rdfs:label "remakeOf"@en-us ;
+    rdfs:comment "Specifies that this CreativeWork is a remake of a previously existing CreativeWork."@en-us ;
+    rdfs:domain schema:CreativeWork ;
+    rdfs:range schema:CreativeWork ;
+    rdfs:subPropertyOf schema:isBasedOn .
+
+sbm:relatedWork a owl:ObjectProperty ;
+    rdfs:label "relatedWork"@en-us ;
+    rdfs:comment "Specifies that this CreativeWork related to another CreativeWork through a CreativeWorkRelationship."@en-us ;
+    rdfs:domain schema:CreativeWork ;
+    rdfs:range schema:CreativeWorkRelationship ;
+    rdfs:subPropertyOf schema:subjectOf .
+
+
+#### Named Individuals ####
+
+sbm:PertainsTo_WholeFilm a schema:Text, 
+        owl:NamedIndividual ;
+    rdf:value "Pertains to the whole film"@en-us .
+
+sbm:PertainsTo_FilmScene a schema:Text, 
+        owl:NamedIndividual ;
+    rdf:value "Pertains to one of more scenes in a film."@en-us .
