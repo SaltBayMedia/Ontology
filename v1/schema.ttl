@@ -49,6 +49,10 @@ sbm:CreativeWorkRelationship a owl:Class ;
             owl:minCardinality "1"^^xsd:nonNegativeInteger ;
             owl:onProperty schema:category ] .
 
+sbm:Agent a owl:Class ;
+    dfs:label "CreativeWorkRelationship"@en-us ;
+    rdfs:comment """A superclass for classifying entities act in a certain role on or for a CreativeWork."""@en-us ;
+    rdfs:subClassOf CreativeWorkEditorRangeRestriction ;
 
 #### Object Properties
 
@@ -66,13 +70,27 @@ sbm:relatedWork a owl:ObjectProperty ;
     rdfs:range schema:CreativeWorkRelationship ;
     rdfs:subPropertyOf schema:subjectOf .
 
+sbm:editor a owl:ObjectProperty ;
+    rdfs:label "editor"@en-us ;
+    rdfs:comment "Specifies a Person or Organization that edited a CreativeWork."@en-us ;
+    rdfs:domain schema:CreativeWork ;
+    rdfs:range sbm:Agent ;
+    rdfs:subPropertyOf schema:subjectOf .
 
-#### Named Individuals ####
+sbm:cinematographer a owl:ObjectProperty ;
+    rdfs:label "editor"@en-us ;
+    rdfs:comment "Specifies a Person that acted as the cinematographer on a CreativeWork."@en-us ;
+    rdfs:domain schema:CreativeWork ;
+    rdfs:range sbm:Person ;
+    rdfs:subPropertyOf schema:subjectOf .
 
-sbm:PertainsTo_WholeFilm a schema:Text, 
-        owl:NamedIndividual ;
-    rdf:value "Pertains to the whole film"@en-us .
 
-sbm:PertainsTo_FilmScene a schema:Text, 
-        owl:NamedIndividual ;
-    rdf:value "Pertains to one of more scenes in a film."@en-us .
+#### Axioms ####
+
+schema:Person rdfs:subClassOf sbm:Agent ;
+schema:Organization rdfs:subClassOf sbm:Agent ;
+    
+sbm:CreativeWorkEditorRangeRestriction a owl:Restriction ;
+    owl:onProperty sbm:editor ;
+    owl:oneOf schema:Person, schema:Organization .
+
