@@ -1,0 +1,67 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "sbm": "http://schema.saltbaymedia.com/ontology/v1/"
+  },
+  "@graph": [
+    {
+      "@id": "sbm:CreativeWorkRelationship",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "Qualifies how one CreativeWork is related to another CreativeWork. Since this is the value-add, classify it as a schema:Product. In this way, we can use schema:additionalProperty to describe the value-add.",
+      "rdfs:label": "CreativeWorkRelationship",
+      "rdfs:subClassOf": [{ "@id": "schema:Product"},{"@id": "schema:CreativeWork"}]
+    },
+    {
+      "@id": "sbm:remakeOf",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Specifies that this CreativeWork is a remake of a previously existing CreativeWork.",
+      "rdfs:label": "remakeOf",
+      "rdfs:subPropertyOf": { "@id": "schema:isBasedOn"},
+      "schema:domainIncludes": { "@id": "schema:CreativeWork" },
+      "schema:rangeIncludes": { "@id": "schema:CreativeWork" }
+    },
+    {
+      "@id": "sbm:relatedWork",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Specifies that this CreativeWork related to another CreativeWork through a CreativeWorkRelationship.",
+      "rdfs:label": "relatedWork",
+      "rdfs:subPropertyOf": { "@id": "schema:subjectOf"},
+      "schema:domainIncludes": { "@id": "schema:CreativeWork" },
+      "schema:rangeIncludes": { "@id": "schema:CreativeWorkRelationship" }
+    },
+    {
+      "@id": "sbm:editor",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Specifies a Person or Organization that edited a CreativeWork.",
+      "rdfs:label": "editor",
+      "rdfs:subPropertyOf": { "@id": "schema:subjectOf"},
+      "schema:domainIncludes": { "@id": "schema:CreativeWork" },
+      "schema:rangeIncludes": [
+        { "@id": "schema:Person" },
+        { "@id": "schema:Organization" }
+      ]
+    },
+    {
+      "@id": "sbm:cinematographer",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Specifies a Person that acted as the cinematographer on a CreativeWork.",
+      "rdfs:label": "cinematographer",
+      "rdfs:subPropertyOf": { "@id": "schema:subjectOf"},
+      "schema:domainIncludes": [
+        { "@id": "schema:Clip" },
+        { "@id": "schema:CreativeWorkSeason" },
+        { "@id": "schema:Episode" },
+        { "@id": "schema:Movie" },
+        { "@id": "schema:MovieSeries" },
+        { "@id": "schema:TVSeries" }
+      ]
+      "schema:rangeIncludes": { "@id": "schema:Person" }
+    }
+  ]
+}
